@@ -1,10 +1,10 @@
 package exam.quizBankContext.domain.model;
 
-import exam.quizBankContext.domain.shared.ValueObject;
+import exam.quizBankContext.domain.shared.Entity;
 
 import java.time.LocalDateTime;
 
-public class BlankQuiz implements ValueObject<BlankQuiz> {
+public class BlankQuiz implements Entity<BlankQuiz> {
     private BlankQuizId blankQuizId;
     private String teacherId;
     private String context;
@@ -23,22 +23,25 @@ public class BlankQuiz implements ValueObject<BlankQuiz> {
         this.score = score;
     }
 
-    public void revise() {
+    public void revise(String teacherId) {
+        this.teacherId = teacherId;
         this.isRevise = true;
         this.updatedTime = LocalDateTime.now();
     }
 
-    public void delete() {
+    public void delete(String teacherId) {
+        this.teacherId = teacherId;
         this.isDelete = true;
         this.updatedTime = LocalDateTime.now();
     }
 
-    @Override
-    public boolean sameValueAs(BlankQuiz other) {
-        return blankQuizId.sameValueAs(other.blankQuizId);
+    public void update(String teacherId) {
+        this.teacherId = teacherId;
+        this.updatedTime = LocalDateTime.now();
     }
 
-    public void update(BlankQuiz blankQuiz) {
-        this.updatedTime = LocalDateTime.now();
+    @Override
+    public boolean sameIdentityAs(BlankQuiz other) {
+        return blankQuizId.sameValueAs(other.blankQuizId);
     }
 }
